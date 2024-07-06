@@ -31,7 +31,7 @@ main {
 body {
   color: #333;
   height: 100vh;
-  background-image: url(/img/map2.jpg);
+  background-image: url(img/map2.jpg);
   justify-content: center;
   background-position: center;
   background-repeat: no-repeat;

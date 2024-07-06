@@ -117,7 +117,7 @@ const displayCountry = () => {
   img.className = "flag-img";
 
   // Define img path
-  img.src = `/img/${country}.png`;
+  img.src = `img/${country}.png`;
 
   // Append img in DOM
   flag.appendChild(img);
