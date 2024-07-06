@@ -1,0 +1,68 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Capital Guesser</title>
+    <!-- <link rel="icon" href="title-icon.png" type="image/x-icon" /> -->
+    <link rel="stylesheet" href="style.css" />
+
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Open+Sans:ital,wght@0,300..800;1,300..800&display=swap"
+      rel="stylesheet"
+    />
+
+    <script
+      defer
+      type="module"
+      src="https://unpkg.com/ionicons@7.1.0/dist/ionicons/ionicons.esm.js"
+    ></script>
+    <script
+      defer
+      nomodule
+      src="https://unpkg.com/ionicons@7.1.0/dist/ionicons/ionicons.js"
+    ></script>
+  </head>
+  <body>
+    <main>
+      <header>
+        <h1>Trouvez la capitale</h1>
+      </header>
+
+      <div class="stats-container">
+        <span class="timer-container">
+          <ion-icon
+            name="hourglass-outline"
+            class="toggle-timer-btn"
+          ></ion-icon>
+          <span class="timer opacity-zero"></span>
+        </span>
+
+        <span class="score">0</span>
+      </div>
+
+      <figure class="country-container">
+        <figcaption class="country-name"></figcaption>
+        <div class="flag-container"></div>
+      </figure>
+
+      <form class="input-container">
+        <input
+          type="text"
+          placeholder="Capitale"
+          class="input-capital"
+          autofocus
+        />
+        <ion-icon name="checkmark-circle" class="button-ok"></ion-icon>
+      </form>
+
+      <div class="result-container">
+        <h4 class="result-text"></h4>
+        <div class="hint-container"></div>
+      </div>
+    </main>
+  </body>
+  <script src="script.js"></script>
+</html>
