@@ -192,7 +192,7 @@ toggleTimerBtn.addEventListener("click", toggleTimer);
 
 // Display guesses
 btnOK.addEventListener("click", () => {
-  const inputValue = inputCapital.value.toLowerCase();
+  const inputValue = inputCapital.value.toLowerCase().trim();
 
   // Correct guess even without accents
   const correctGuess =

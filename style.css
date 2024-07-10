@@ -190,9 +190,9 @@ h1 {
 }
 
 /* Media queries pour iPhone X */
-@media (max-width: 600px) {
+@media (max-width: 590px) {
   html {
-    font-size: 50%; /* Réduit à 8px, donc 1rem = 8px */
+    font-size: 55%; /* Réduit à 8px, donc 1rem = 8px */
   }
 
   body {
@@ -220,6 +220,61 @@ h1 {
 
   .flag-container {
     height: 15rem; /* 150px */
+  }
+
+  .input-container {
+    flex-direction: column;
+    gap: 1.2rem; /* 12px */
+  }
+
+  .input-capital {
+    font-size: 1.6rem; /* 16px */
+    padding: 0.4em 0.6em; /* 4px 6px */
+  }
+
+  .button-ok {
+    font-size: 3.2rem; /* 32px */
+  }
+
+  .result-container {
+    font-size: 2rem; /* 20px */
+    gap: 2.4rem; /* 24px */
+  }
+
+  .hint-container {
+    font-size: 1.4rem; /* 14px */
+  }
+}
+
+@media (max-width: 520px) {
+  html {
+    font-size: 38%; /* Réduit à 8px, donc 1rem = 8px */
+  }
+
+  body {
+    justify-content: flex-start;
+    padding: 2rem; /* 20px */
+  }
+
+  main {
+    width: 44rem;
+    height: 51rem;
+    gap: 2.4rem;
+    margin: 0 auto;
+  }
+
+  h1 {
+    font-size: 2.4rem; /* 24px */
+    margin-bottom: 1.6rem; /* 16px */
+  }
+
+  h2 {
+    font-size: 2rem; /* 20px */
+    margin-bottom: 1.2rem; /* 12px */
+  }
+
+  .flag-container {
+    height: 15rem;
   }
 
   .input-container {
