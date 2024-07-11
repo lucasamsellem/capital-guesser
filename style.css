@@ -11,7 +11,7 @@ FONT SIZE SYSTEM (px)
 * {
   margin: 0;
   padding: 0;
-  font-family: "Open Sans", sans-serif;
+  font-family: 'Open Sans', sans-serif;
 }
 
 html {
@@ -41,7 +41,7 @@ body {
 main {
   background-color: #f8f9fa;
   flex-direction: column;
-  min-height: 69rem;
+  min-height: 60rem;
   min-width: 45rem;
   gap: 4.8rem;
   padding: 5em;
@@ -121,7 +121,7 @@ h1 {
   align-items: center;
   gap: 1.6rem;
 
-  margin: 2.4rem 0;
+  /* margin: 2.4rem 0; */
 }
 
 .input-capital {
@@ -157,8 +157,8 @@ h1 {
   justify-content: center;
   align-items: center;
   font-size: 2rem;
-  gap: 4.2rem;
-  margin-top: 2.6rem;
+  gap: 2rem;
+  /* margin-top: 2.6rem; */
 }
 
 .hint-container {
@@ -278,8 +278,8 @@ h1 {
   }
 
   .input-container {
-    flex-direction: column;
-    gap: 1.2rem; /* 12px */
+    /* flex-direction: column; */
+    gap: 1.2rem;
   }
 
   .input-capital {
