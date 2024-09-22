@@ -42,7 +42,7 @@ body {
 main {
   background-color: #f8f9fa;
   flex-direction: column;
-  min-height: 70rem;
+  min-height: 73rem;
   min-width: 45rem;
   gap: 4.8rem;
   padding: 2em 5em 5em;
@@ -55,7 +55,7 @@ header {
 }
 
 h1 {
-  font-size: 3rem;
+  font-size: 3.2rem;
   margin: 1.4rem 0;
 }
 
@@ -149,7 +149,7 @@ h1 {
   justify-content: center;
   align-items: center;
   font-size: 2.2rem;
-  gap: 3.2rem;
+  gap: 4.2rem;
   margin-top: 2.6rem;
 }
 
@@ -157,7 +157,7 @@ h1 {
   font-size: 1.4rem;
   display: flex;
   align-items: center;
-  gap: 1.2rem;
+  gap: 1.6rem;
   font-style: italic;
 }
 

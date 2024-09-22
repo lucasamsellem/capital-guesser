@@ -1,36 +1,36 @@
 const capitals = {
-  Australie: "canberra",
-  Allemagne: "berlin",
-  Égypte: "le caire",
-  Thaïlande: "bangkok",
-  Pologne: "varsovie",
-  Liban: "beyrouth",
-  Chili: "santiago",
-  Suède: "stockholm",
-  Tunisie: "tunis",
-  Cuba: "la havane",
-  Mali: "bamako",
-  Argentine: "buenos aires",
-  Canada: "ottawa",
-  Venezuela: "caracas",
-  Syrie: "damas",
-  Finlande: "helsinki",
-  Ukraine: "kiev",
-  Serbie: "belgrade",
-  Sénégal: "dakar",
-  Inde: "new delhi",
-  Grèce: "athènes",
-  Chine: "pékin",
-  Brésil: "brasilia",
-  Russie: "moscou",
-  Israël: "jérusalem",
-  Japon: "tokyo",
-  Portugal: "lisbonne",
-  Irlande: "dublin",
-  Mexique: "mexico",
-  Hongrie: "budapest",
-  "Corée du Sud": "séoul",
-  "Pays-Bas": "amsterdam",
+  Australie: ['canberra', 'camberra', 'canbera', 'cambera'],
+  Allemagne: ['berlin', 'bérlin'],
+  Égypte: ['le caire', 'cairo', 'el caire'],
+  Thaïlande: ['bangkok', 'bangcok', 'bankok', 'bancok'],
+  Pologne: ['varsovie', 'warsaw', 'varsoie'],
+  Liban: ['beyrouth', 'beirut', 'beyrout'],
+  Chili: ['santiago', 'santiaggo', 'san tiago'],
+  Suède: ['stockholm', 'stokholm', 'stocolm'],
+  Tunisie: ['tunis', 'tunice'],
+  Cuba: ['la havane', 'havana', 'havanne'],
+  Mali: ['bamako', 'bammako', 'bamacko'],
+  Argentine: ['buenos aires', 'buénos aires', 'buenos airés'],
+  Canada: ['ottawa', 'otawa', 'otawah'],
+  Venezuela: ['caracas', 'caracass', 'caraccas'],
+  Syrie: ['damas', 'damascus', 'damasz'],
+  Finlande: ['helsinki', 'helsinky', 'helsiki'],
+  Ukraine: ['kiev', 'kyiv', 'kyev'],
+  Serbie: ['belgrade', 'belgrad'],
+  Sénégal: ['dakar', 'dacker', 'dakhar', 'dacar'],
+  Inde: ['new delhi', 'new deli', 'neu delhi'],
+  Grèce: ['athènes', 'athens'],
+  Chine: ['pékin', 'beijing'],
+  Brésil: ['brasilia', 'brazilia'],
+  Russie: ['moscou', 'moscow', 'moskva'],
+  Israël: ['jérusalem', 'yerushalaim'],
+  Japon: ['tokyo', 'toquio'],
+  Portugal: ['lisbonne', 'lisbon', 'lisbone'],
+  Irlande: ['dublin', 'doblin'],
+  Mexique: ['mexico', 'mejico'],
+  Hongrie: ['budapest', 'budapeste', 'budapesht'],
+  'Corée du Sud': ['séoul', 'seoul'],
+  'Pays-Bas': ['amsterdam', 'amstérdam', 'amsterdan'],
 };
 
 // todo : ajouter rubrique difficulté (facile, moyen, difficile)
@@ -40,25 +40,25 @@ const capitals = {
 // ! VARIABLES //////////////////////////////////////
 
 // Query selectors
-const countryName = document.querySelector(".country-name");
-const flag = document.querySelector(".flag-container");
-const resultText = document.querySelector(".result-text");
-const inputCapital = document.querySelector(".input-capital");
-const btnOK = document.querySelector(".button-ok");
-const btnNext = document.querySelector(".next-button");
-const hint = document.querySelector(".hint-container");
-const toggleTimerBtn = document.querySelector(".toggle-timer-btn");
-const timerText = document.querySelector(".timer");
+const countryName = document.querySelector('.country-name');
+const flag = document.querySelector('.flag-container');
+const resultText = document.querySelector('.result-text');
+const inputCapital = document.querySelector('.input-capital');
+const btnOK = document.querySelector('.button-ok');
+const btnNext = document.querySelector('.next-button');
+const hint = document.querySelector('.hint-container');
+const toggleTimerBtn = document.querySelector('.toggle-timer-btn');
+const timerText = document.querySelector('.timer');
 const countries = Object.keys(capitals);
-const scoreEl = document.querySelector(".score");
-
+const scoreEl = document.querySelector('.score');
 const randomIndexHistory = new Set();
+const timerSeconds = 8;
 
 // Dynamic variables
 let uniqueIndex;
 let capital;
 let fails = 0;
-let seconds = 8;
+let seconds = timerSeconds;
 let timerInterval = false;
 let timerState = false;
 let score = 0;
@@ -68,8 +68,6 @@ let score = 0;
 const generateUniqueIndex = () => {
   // reset history if all countries were guessed
   if (randomIndexHistory.size >= countries.length) randomIndexHistory.clear();
-
-  // * La boucle do...while garantit que le bloc de code à l'intérieur est exécuté au moins une fois avant de vérifier la condition.
 
   // Generate new index if already stored in 'randomIndexHistory'
   do {
@@ -81,20 +79,17 @@ const generateUniqueIndex = () => {
 
 // Update country
 const updateCountry = () => {
-  // Generate unique random index then push it to the set
   uniqueIndex = generateUniqueIndex();
   randomIndexHistory.add(uniqueIndex);
-  console.log(randomIndexHistory);
-
   capital = capitals[countries[uniqueIndex]];
 };
 
 // Reset UI when new country
 const updateUI = () => {
-  inputCapital.value = "";
-  inputCapital.classList.remove("correct");
-  resultText.innerHTML = "";
-  hint.textContent = "";
+  inputCapital.value = '';
+  inputCapital.classList.remove('correct');
+  resultText.innerHTML = '';
+  hint.textContent = '';
   fails = 0;
 };
 
@@ -109,24 +104,19 @@ const displayCountry = () => {
   updateCountry();
   const country = countries[uniqueIndex];
 
-  // Clear previous country and flag
-  flag.innerHTML = "";
+  flag.innerHTML = '';
 
-  // Create img element
-  const img = document.createElement("img");
-  img.className = "flag-img";
+  const img = document.createElement('img');
+  img.className = 'flag-img';
 
-  // Define img path
   img.src = `img/${country}.png`;
 
-  // Append img in DOM
   flag.appendChild(img);
 
-  // Display country name
   countryName.textContent = country;
 
   // Reset timer and interval when displaying a new country
-  timerText.innerHTML = seconds = 8;
+  timerText.innerHTML = seconds = timerSeconds;
 
   // Clear any previous timer interval
   if (timerInterval) stopTimer();
@@ -136,10 +126,9 @@ const displayCountry = () => {
 };
 displayCountry();
 
-// Timer functions
 const startTimer = () => {
-  timerText.classList.remove("opacity-zero");
-  toggleTimerBtn.classList.toggle("rotate");
+  timerText.classList.remove('opacity-zero');
+  toggleTimerBtn.classList.toggle('rotate');
 
   timerInterval = setInterval(() => {
     if (seconds === 0) {
@@ -169,16 +158,17 @@ const toggleTimer = () => {
 
   if (timerState) {
     if (!timerInterval) {
-      seconds = 8;
+      seconds = timerSeconds;
       timerText.innerHTML = seconds;
       startTimer();
     }
   } else {
     stopTimer();
-    timerText.classList.add("opacity-zero");
-    toggleTimerBtn.classList.remove("rotate");
+    timerText.classList.add('opacity-zero');
+    toggleTimerBtn.classList.remove('rotate');
   }
 };
+toggleTimerBtn.addEventListener('click', toggleTimer);
 
 const updateScore = () => {
   score <= 0 ? (score = 0) : score;
@@ -187,28 +177,21 @@ const updateScore = () => {
 
 // ! DOM MANIPULATION ////////////////////////
 
-// Activate timer button on click
-toggleTimerBtn.addEventListener("click", toggleTimer);
-
 // Display guesses
-btnOK.addEventListener("click", () => {
+btnOK.addEventListener('click', () => {
   const inputValue = inputCapital.value.toLowerCase().trim();
 
   // Correct guess even without accents
-  const correctGuess =
-    inputValue.normalize("NFD").replace(/[\u0300-\u036f]/g, "") ===
-    capital.normalize("NFD").replace(/[\u0300-\u036f]/g, "");
+  const correctGuess = capital.some(
+    (guess) =>
+      inputValue.normalize('NFD').replace(/[\u0300-\u036f]/g, '') ===
+      guess.normalize('NFD').replace(/[\u0300-\u036f]/g, '')
+  );
 
   if (correctGuess) {
-    // Hide hint text
-    hint.textContent = "";
-
-    // Display correct text
-    updateResultText("✅ Bien joué !", "var(--green)");
-
-    // Apply CSS dynamic styles
-    inputCapital.classList.add("correct");
-
+    hint.textContent = '';
+    updateResultText('✅ Bien joué !', 'var(--green)');
+    inputCapital.classList.add('correct');
     score++;
     updateScore();
 
@@ -218,44 +201,38 @@ btnOK.addEventListener("click", () => {
       updateUI();
     }, 500);
   } else {
-    // Display fail text
-    updateResultText("❌ Ce n'est pas la bonne capitale", "red");
-
-    // Increment fails
+    updateResultText("❌ Ce n'est pas la bonne capitale", 'red');
     fails++;
-
-    // Update and block score if below 0
     score--;
     updateScore();
 
     // Generate hint HTML
-    const generateHintText = (count, letters) => {
+    const generateHintText = (failsCount, letters) => {
       const hintDescriptions = [
-        "La première lettre est",
-        "Les deux premières lettres sont",
+        'La première lettre est',
+        'Les deux premières lettres sont',
       ];
+
+      const hintText = letters.slice(0, failsCount).toUpperCase();
 
       return `
         <ion-icon name="bulb-outline" class="bulb"></ion-icon>
         <span>
-          ${
-            hintDescriptions[count - 1]
-          } : <strong>${letters.toUpperCase()}</strong>
+          ${hintDescriptions[failsCount - 1]} : <strong>${hintText}</strong>
         </span>
-      `;
+       `;
     };
 
-    // Display first letters based on fails count
-    const hintLetters = capital.slice(0, fails);
-
     // Display hint text
-    if (fails <= 2) hint.innerHTML = generateHintText(fails, hintLetters);
+    if (fails <= 2) {
+      hint.innerHTML = generateHintText(fails, capital[0]);
+    }
   }
 });
 
 // Press enter key on btnOk
-document.addEventListener("keydown", (e) => {
-  if (e.key === "Enter") {
+document.addEventListener('keydown', (e) => {
+  if (e.key === 'Enter') {
     e.preventDefault();
     btnOK.click();
   }
