@@ -9,7 +9,7 @@ const capitals = {
   Suède: ['stockholm', 'stokholm', 'stocolm'],
   Tunisie: ['tunis', 'tunice'],
   Cuba: ['la havane', 'havana', 'havanne'],
-  Mali: ['bamako', 'bammako', 'bamacko'],
+  Mali: ['bamako', 'bammako', 'bamacko', 'bamaco'],
   Argentine: ['buenos aires', 'buénos aires', 'buenos airés'],
   Canada: ['ottawa', 'otawa', 'otawah'],
   Venezuela: ['caracas', 'caracass', 'caraccas'],
@@ -18,7 +18,7 @@ const capitals = {
   Ukraine: ['kiev', 'kyiv', 'kyev'],
   Serbie: ['belgrade', 'belgrad'],
   Sénégal: ['dakar', 'dacker', 'dakhar', 'dacar'],
-  Inde: ['new delhi', 'new deli', 'neu delhi'],
+  Inde: ['new delhi', 'new deli', 'new-delhi'],
   Grèce: ['athènes', 'athens'],
   Chine: ['pékin', 'beijing'],
   Brésil: ['brasilia', 'brazilia'],
@@ -37,9 +37,8 @@ const capitals = {
 // todo : bar progression en fonction du score
 // todo : trouver le + de capitales en l'espace de 30 secondes
 
-// ! VARIABLES //////////////////////////////////////
+// ! VARIABLES
 
-// Query selectors
 const countryName = document.querySelector('.country-name');
 const flag = document.querySelector('.flag-container');
 const resultText = document.querySelector('.result-text');
@@ -52,24 +51,25 @@ const timerText = document.querySelector('.timer');
 const countries = Object.keys(capitals);
 const scoreEl = document.querySelector('.score');
 const randomIndexHistory = new Set();
-const timerSeconds = 8;
+const initialCountdownSeconds = 8;
+const hintText = ['La première lettre est', 'Les deux premières lettres sont'];
+const hintLettersLimit = 2;
 
-// Dynamic variables
 let uniqueIndex;
 let capital;
 let fails = 0;
-let seconds = timerSeconds;
-let timerInterval = false;
+let seconds = initialCountdownSeconds;
+let countdown = false;
 let timerState = false;
 let score = 0;
 
-// ! FUNCTIONS //////////////////////////////////////
+// ! FUNCTIONS
 
 const generateUniqueIndex = () => {
-  // reset history if all countries were guessed
+  // Reset history if all countries were guessed
   if (randomIndexHistory.size >= countries.length) randomIndexHistory.clear();
 
-  // Generate new index if already stored in 'randomIndexHistory'
+  // Generate new index if already stored in randomIndexHistory
   do {
     uniqueIndex = Math.trunc(Math.random() * countries.length);
   } while (randomIndexHistory.has(uniqueIndex));
@@ -77,14 +77,12 @@ const generateUniqueIndex = () => {
   return uniqueIndex;
 };
 
-// Update country
 const updateCountry = () => {
   uniqueIndex = generateUniqueIndex();
   randomIndexHistory.add(uniqueIndex);
   capital = capitals[countries[uniqueIndex]];
 };
 
-// Reset UI when new country
 const updateUI = () => {
   inputCapital.value = '';
   inputCapital.classList.remove('correct');
@@ -93,33 +91,38 @@ const updateUI = () => {
   fails = 0;
 };
 
-// Update results texts
-const updateResultText = (message, clr) => {
-  resultText.textContent = message;
+const updateResultText = (text, clr) => {
+  resultText.textContent = text;
   resultText.style.color = clr;
 };
 
-// Display country and flag
+const updateScore = () => {
+  score = Math.max(score, 0);
+  scoreEl.textContent = score;
+};
+
+const generateHint = (failsCount, capitalFirstLetters) => {
+  const hintLetters = capitalFirstLetters.slice(0, failsCount).toUpperCase();
+
+  return `
+    <ion-icon name="bulb-outline" class="bulb"/></ion-icon>
+    <span>
+      ${hintText[failsCount - 1]} : <strong>${hintLetters}</strong>
+    </span>
+   `;
+};
+
+// Display country name and its flag
 const displayCountry = () => {
   updateCountry();
   const country = countries[uniqueIndex];
 
-  flag.innerHTML = '';
-
-  const img = document.createElement('img');
-  img.className = 'flag-img';
-
-  img.src = `img/${country}.png`;
-
-  flag.appendChild(img);
-
   countryName.textContent = country;
-
-  // Reset timer and interval when displaying a new country
-  timerText.innerHTML = seconds = timerSeconds;
+  flag.innerHTML = `<img class="flag-img" src="img/${country}.png" />`;
+  timerText.innerHTML = seconds = initialCountdownSeconds;
 
   // Clear any previous timer interval
-  if (timerInterval) stopTimer();
+  if (countdown) stopTimer();
 
   // Reactivate timer if it's running
   if (timerState) startTimer();
@@ -130,7 +133,7 @@ const startTimer = () => {
   timerText.classList.remove('opacity-zero');
   toggleTimerBtn.classList.toggle('rotate');
 
-  timerInterval = setInterval(() => {
+  countdown = setInterval(() => {
     if (seconds === 0) {
       stopTimer();
       updateUI();
@@ -147,37 +150,29 @@ const startTimer = () => {
 };
 
 const stopTimer = () => {
-  clearInterval(timerInterval);
-  timerInterval = false;
+  clearInterval(countdown);
+  countdown = false;
 };
 
-// Function to toggle the timer on button click
 const toggleTimer = () => {
   // Inverse state
   timerState = !timerState;
 
-  if (timerState) {
-    if (!timerInterval) {
-      seconds = timerSeconds;
-      timerText.innerHTML = seconds;
-      startTimer();
-    }
+  if (timerState && !countdown) {
+    // Reset countdown when timer is on
+    seconds = initialCountdownSeconds;
+    timerText.innerHTML = seconds;
+    startTimer();
   } else {
     stopTimer();
     timerText.classList.add('opacity-zero');
     toggleTimerBtn.classList.remove('rotate');
   }
 };
+
+// ! DOM MANIPULATION
 toggleTimerBtn.addEventListener('click', toggleTimer);
 
-const updateScore = () => {
-  score <= 0 ? (score = 0) : score;
-  scoreEl.textContent = score;
-};
-
-// ! DOM MANIPULATION ////////////////////////
-
-// Display guesses
 btnOK.addEventListener('click', () => {
   const inputValue = inputCapital.value.toLowerCase().trim();
 
@@ -188,46 +183,33 @@ btnOK.addEventListener('click', () => {
       guess.normalize('NFD').replace(/[\u0300-\u036f]/g, '')
   );
 
+  const correctCapitalSpelling = capital[0];
+
+  // Display guess result
   if (correctGuess) {
-    hint.textContent = '';
+    stopTimer();
+    inputCapital.value = correctCapitalSpelling;
     updateResultText('✅ Bien joué !', 'var(--green)');
     inputCapital.classList.add('correct');
     score++;
-    updateScore();
+    hint.textContent = '';
 
-    // Reload page after 0.5 sec
+    // Reload page after 1 sec delay
     setTimeout(() => {
       displayCountry();
       updateUI();
-    }, 500);
+    }, 1000);
   } else {
     updateResultText("❌ Ce n'est pas la bonne capitale", 'red');
     fails++;
     score--;
-    updateScore();
-
-    // Generate hint HTML
-    const generateHintText = (failsCount, letters) => {
-      const hintDescriptions = [
-        'La première lettre est',
-        'Les deux premières lettres sont',
-      ];
-
-      const hintText = letters.slice(0, failsCount).toUpperCase();
-
-      return `
-        <ion-icon name="bulb-outline" class="bulb"></ion-icon>
-        <span>
-          ${hintDescriptions[failsCount - 1]} : <strong>${hintText}</strong>
-        </span>
-       `;
-    };
 
     // Display hint text
-    if (fails <= 2) {
-      hint.innerHTML = generateHintText(fails, capital[0]);
+    if (fails <= hintLettersLimit) {
+      hint.innerHTML = generateHint(fails, correctCapitalSpelling);
     }
   }
+  updateScore();
 });
 
 // Press enter key on btnOk
