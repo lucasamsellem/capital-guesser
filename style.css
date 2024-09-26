@@ -42,7 +42,7 @@ body {
 main {
   background-color: #f8f9fa;
   flex-direction: column;
-  min-height: 73rem;
+  min-height: 69rem;
   min-width: 45rem;
   gap: 4.8rem;
   padding: 2em 5em 5em;
@@ -54,9 +54,23 @@ header {
   width: 100%;
 }
 
-h1 {
-  font-size: 3.2rem;
-  margin: 1.4rem 0;
+.mode-btns {
+  display: flex;
+  justify-content: center;
+  gap: 1.6rem;
+}
+
+.mode-btn {
+  font-size: 1.4rem;
+  border: unset;
+  padding: 0.5em 1em;
+  border-radius: 10px;
+  background-color: #1c7ed6;
+  opacity: 0.4;
+  color: white;
+  font-weight: 600;
+  cursor: pointer;
+  transition: all 0.2s;
 }
 
 .country-container {
@@ -69,11 +83,18 @@ h1 {
   justify-content: space-between;
   font-size: 2.2rem;
 }
-
-.timer-container {
-  display: flex;
-  align-items: center;
-  gap: 0.8rem;
+.title-container {
+  position: relative;
+}
+h1 {
+  font-size: calc(1.6rem + 1vh);
+  margin: 1.4rem 0;
+}
+.timer {
+  font-size: calc(1rem + 1vh);
+  position: absolute;
+  top: 1.6rem;
+  right: -4.6rem;
 }
 
 .toggle-timer-btn {
@@ -96,13 +117,13 @@ h1 {
 }
 
 .country-name {
-  font-size: 2.6rem;
+  font-size: calc(1.8rem + 1vh);
   font-weight: 300;
   margin-bottom: 1.6rem;
 }
 
 .flag-img {
-  max-height: 18.5rem;
+  height: calc(15rem + 1vh);
   border-radius: 10px;
   box-shadow: 0 0 5px rgba(0, 0, 0, 0.076);
 }
@@ -112,7 +133,6 @@ h1 {
   justify-content: center;
   align-items: center;
   gap: 1.6rem;
-  /* margin: 2.4rem 0; */
 }
 
 .input-capital {
@@ -181,6 +201,10 @@ h1 {
   background-color: var(--green);
 }
 
+.active {
+  opacity: 1 !important;
+}
+
 /* MEDIA QUERIES */
 @media (max-width: 580px) {
   main {
@@ -196,12 +220,26 @@ h1 {
   }
 
   .toggle-timer-btn {
-    font-size: 2.4rem;
+    font-size: 2.5rem;
+  }
+
+  .mode-btns {
+    gap: 1.2rem;
+  }
+
+  .mode-btn {
+    font-size: calc(0.8rem + 0.4vw);
   }
 
   h1 {
-    font-size: 1.8rem;
+    font-size: calc(1.4rem + 1vw);
     margin: 2rem 0;
+  }
+
+  .timer {
+    font-size: calc(1rem + 0.4vw);
+    top: 2.3rem;
+    right: -3rem;
   }
 
   h2 {
@@ -210,11 +248,11 @@ h1 {
   }
 
   .country-name {
-    font-size: 1.6rem;
+    font-size: calc(1rem + 1.6vw);
   }
 
   .flag-img {
-    max-height: 11rem;
+    height: calc(10rem + 1.6vw);
   }
 
   .input-container {
@@ -223,12 +261,12 @@ h1 {
   }
 
   .input-capital {
-    font-size: 1.2rem;
+    font-size: 1.4rem;
     padding: 0.4em 0.6em;
   }
 
   .button-ok {
-    font-size: 3rem;
+    font-size: 3.2rem;
   }
 
   .result-container {

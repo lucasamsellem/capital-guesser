@@ -32,19 +32,25 @@
     <main>
       <header>
         <div class="stats-container">
-          <span class="timer-container">
-            <ion-icon
-              name="hourglass-outline"
-              class="toggle-timer-btn"
-            ></ion-icon>
-            <span class="timer opacity-zero"></span>
-          </span>
+          <ion-icon
+            name="hourglass-outline"
+            class="toggle-timer-btn"
+          ></ion-icon>
+
+          <div class="mode-btns">
+            <button class="mode-btn active">Facile</button>
+            <button class="mode-btn">Moyen</button>
+            <button class="mode-btn">Difficile</button>
+          </div>
 
           <span class="score">0</span>
         </div>
       </header>
 
-      <h1>Trouvez la capitale</h1>
+      <div class="title-container">
+        <h1>Trouvez la capitale</h1>
+        <span class="timer opacity-zero"></span>
+      </div>
 
       <figure class="country-container">
         <figcaption class="country-name"></figcaption>

@@ -1,39 +1,46 @@
 const capitals = {
-  Australie: ['canberra', 'camberra', 'canbera', 'cambera'],
-  Allemagne: ['berlin', 'bérlin'],
-  Égypte: ['le caire', 'cairo', 'el caire'],
-  Thaïlande: ['bangkok', 'bangcok', 'bankok', 'bancok'],
-  Pologne: ['varsovie', 'warsaw', 'varsoie'],
-  Liban: ['beyrouth', 'beirut', 'beyrout'],
-  Chili: ['santiago', 'santiaggo', 'san tiago'],
-  Suède: ['stockholm', 'stokholm', 'stocolm'],
-  Tunisie: ['tunis', 'tunice'],
-  Cuba: ['la havane', 'havana', 'havanne'],
-  Mali: ['bamako', 'bammako', 'bamacko', 'bamaco'],
-  Argentine: ['buenos aires', 'buénos aires', 'buenos airés'],
-  Canada: ['ottawa', 'otawa', 'otawah'],
-  Venezuela: ['caracas', 'caracass', 'caraccas'],
-  Syrie: ['damas', 'damascus', 'damasz'],
-  Finlande: ['helsinki', 'helsinky', 'helsiki'],
-  Ukraine: ['kiev', 'kyiv', 'kyev'],
-  Serbie: ['belgrade', 'belgrad'],
-  Sénégal: ['dakar', 'dacker', 'dakhar', 'dacar'],
-  Inde: ['new delhi', 'new deli', 'new-delhi'],
-  Grèce: ['athènes', 'athens'],
-  Chine: ['pékin', 'beijing'],
-  Brésil: ['brasilia', 'brazilia'],
-  Russie: ['moscou', 'moscow', 'moskva'],
-  Israël: ['jérusalem', 'yerushalaim'],
-  Japon: ['tokyo', 'toquio'],
-  Portugal: ['lisbonne', 'lisbon', 'lisbone'],
-  Irlande: ['dublin', 'doblin'],
-  Mexique: ['mexico', 'mejico'],
-  Hongrie: ['budapest', 'budapeste', 'budapesht'],
-  'Corée du Sud': ['séoul', 'seoul'],
-  'Pays-Bas': ['amsterdam', 'amstérdam', 'amsterdan'],
+  facile: {
+    Allemagne: ['berlin', 'bérlin'],
+    Pologne: ['varsovie', 'warsaw', 'varsoie'],
+    Suède: ['stockholm', 'stokholm', 'stocolm'],
+    Tunisie: ['tunis', 'tunice'],
+    Canada: ['ottawa', 'otawa', 'otawah'],
+    Grèce: ['athènes', 'athens'],
+    Chine: ['pékin', 'beijing'],
+    Brésil: ['brasilia', 'brazilia'],
+    'Corée du Sud': ['séoul', 'seoul'],
+    'Pays-Bas': ['amsterdam', 'amstérdam', 'amsterdan'],
+    Russie: ['moscou', 'moscow', 'moskva'],
+    Japon: ['tokyo', 'toquio'],
+    Portugal: ['lisbonne', 'lisbon', 'lisbone'],
+    Irlande: ['dublin', 'doblin'],
+    Mexique: ['mexico', 'mejico'],
+  },
+  moyen: {
+    Australie: ['canberra', 'camberra', 'canbera', 'cambera'],
+    Égypte: ['le caire', 'cairo', 'el caire'],
+    Thaïlande: ['bangkok', 'bangcok', 'bankok', 'bancok'],
+    Liban: ['beyrouth', 'beirut', 'beyrout'],
+    Cuba: ['la havane', 'havana', 'havanne', 'havane'],
+    Argentine: ['buenos aires', 'buénos aires', 'buenos airés'],
+    Hongrie: ['budapest', 'budapeste', 'budapesht'],
+    Israël: ['jérusalem', 'yerushalaim'],
+    Ukraine: ['kiev', 'kyiv', 'kyev'],
+    Norvège: ['oslo', 'osloo'],
+  },
+  difficile: {
+    Chili: ['santiago', 'santiaggo', 'san tiago'],
+    Mali: ['bamako', 'bammako', 'bamacko', 'bamaco'],
+    Venezuela: ['caracas', 'caracass', 'caraccas'],
+    Sénégal: ['dakar', 'dacker', 'dakhar', 'dacar'],
+    Syrie: ['damas', 'damascus', 'damasz'],
+    Finlande: ['helsinki', 'helsinky', 'helsiki'],
+    Serbie: ['belgrade', 'belgrad'],
+    Inde: ['new delhi', 'new deli', 'new-delhi'],
+    Estonie: ['tallinn', 'talin', 'tallin'],
+  },
 };
 
-// todo : ajouter rubrique difficulté (facile, moyen, difficile)
 // todo : bar progression en fonction du score
 // todo : trouver le + de capitales en l'espace de 30 secondes
 
@@ -48,13 +55,15 @@ const btnNext = document.querySelector('.next-button');
 const hint = document.querySelector('.hint-container');
 const toggleTimerBtn = document.querySelector('.toggle-timer-btn');
 const timerText = document.querySelector('.timer');
-const countries = Object.keys(capitals);
 const scoreEl = document.querySelector('.score');
 const randomIndexHistory = new Set();
 const initialCountdownSeconds = 8;
 const hintText = ['La première lettre est', 'Les deux premières lettres sont'];
 const hintLettersLimit = 2;
+const modeBtns = document.querySelectorAll('.mode-btn');
 
+let mode = 'facile'; // Initial mode
+let countries = Object.keys(capitals[mode]);
 let uniqueIndex;
 let capital;
 let fails = 0;
@@ -62,6 +71,26 @@ let seconds = initialCountdownSeconds;
 let countdown = false;
 let timerState = false;
 let score = 0;
+
+// Define difficulty mode
+modeBtns.forEach((btn) => {
+  btn.addEventListener('click', () => {
+    mode = btn.textContent.toLowerCase();
+    countries = Object.keys(capitals[mode]);
+
+    if (!btn.classList.contains('active')) {
+      randomIndexHistory.clear();
+      displayCountry();
+      updateUI();
+    }
+
+    const activeBtn = document.querySelector('.mode-btn.active');
+    if (activeBtn) activeBtn.classList.remove('active');
+    btn.classList.add('active');
+
+    return mode;
+  });
+});
 
 // ! FUNCTIONS
 
@@ -80,7 +109,7 @@ const generateUniqueIndex = () => {
 const updateCountry = () => {
   uniqueIndex = generateUniqueIndex();
   randomIndexHistory.add(uniqueIndex);
-  capital = capitals[countries[uniqueIndex]];
+  capital = capitals[mode][countries[uniqueIndex]];
 };
 
 const updateUI = () => {
@@ -112,7 +141,6 @@ const generateHint = (failsCount, capitalFirstLetters) => {
    `;
 };
 
-// Display country name and its flag
 const displayCountry = () => {
   updateCountry();
   const country = countries[uniqueIndex];
@@ -194,7 +222,6 @@ btnOK.addEventListener('click', () => {
     score++;
     hint.textContent = '';
 
-    // Reload page after 1 sec delay
     setTimeout(() => {
       displayCountry();
       updateUI();
