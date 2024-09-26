@@ -8,7 +8,6 @@ const capitals = {
     Grèce: ['athènes', 'athens'],
     Chine: ['pékin', 'beijing'],
     Brésil: ['brasilia', 'brazilia'],
-    'Corée du Sud': ['séoul', 'seoul'],
     'Pays-Bas': ['amsterdam', 'amstérdam', 'amsterdan'],
     Russie: ['moscou', 'moscow', 'moskva'],
     Japon: ['tokyo', 'toquio'],
@@ -17,6 +16,7 @@ const capitals = {
     Mexique: ['mexico', 'mejico'],
   },
   moyen: {
+    'Corée du Sud': ['séoul', 'seoul'],
     Australie: ['canberra', 'camberra', 'canbera', 'cambera'],
     Égypte: ['le caire', 'cairo', 'el caire'],
     Thaïlande: ['bangkok', 'bangcok', 'bankok', 'bancok'],
@@ -26,7 +26,6 @@ const capitals = {
     Hongrie: ['budapest', 'budapeste', 'budapesht'],
     Israël: ['jérusalem', 'yerushalaim'],
     Ukraine: ['kiev', 'kyiv', 'kyev'],
-    Norvège: ['oslo', 'osloo'],
   },
   difficile: {
     Chili: ['santiago', 'santiaggo', 'san tiago'],
