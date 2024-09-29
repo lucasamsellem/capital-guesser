@@ -205,6 +205,77 @@ h1 {
   opacity: 1 !important;
 }
 
+@media (max-height: 780px) {
+  /* Ajustement de la taille des éléments */
+  main {
+    min-height: 59rem;
+    min-width: 35rem;
+
+    /* padding: 1.5em 4em 4em; */
+    gap: 5rem;
+  }
+
+  h1 {
+    font-size: calc(1.4rem + 0.8vh);
+    margin: 1rem 0;
+  }
+
+  .timer {
+    /* font-size: calc(0.8rem + 0.8vh); */
+    top: 1.2rem;
+    right: -3.6rem;
+  }
+
+  .toggle-timer-btn {
+    font-size: 3.2rem;
+  }
+
+  .mode-btn {
+    font-size: 1.2rem;
+    padding: 0.4em 0.8em;
+  }
+
+  .country-name {
+    font-size: calc(1.2rem + 0.8vh);
+    margin-bottom: 1.2rem;
+  }
+
+  .flag-img {
+    height: calc(11rem + 0.8vh);
+  }
+
+  .input-capital {
+    font-size: 1.4rem;
+    padding: 0.4em 0.6em;
+  }
+
+  .button-ok {
+    font-size: 3.2rem;
+  }
+
+  .stats-container {
+    font-size: 1.8rem;
+  }
+
+  .result-text {
+    font-size: 1.6rem;
+  }
+
+  .hint-container {
+    font-size: 1rem;
+    /* gap: 1.2rem; */
+  }
+
+  .bulb {
+    font-size: 2.6rem;
+  }
+
+  .score,
+  .timer {
+    padding: 0.1em 0.4em;
+  }
+}
+
 /* MEDIA QUERIES */
 @media (max-width: 580px) {
   main {
