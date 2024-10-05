@@ -43,9 +43,9 @@ body {
 main {
   background-color: #f8f9fa;
   flex-direction: column;
-  min-height: 72rem;
+  min-height: 65rem;
   min-width: 45rem;
-  gap: 4.8rem;
+  gap: 4.5rem;
   padding: 2em 5em 5em;
   border-radius: 10px;
   position: relative;
@@ -92,6 +92,9 @@ h1 {
   font-size: calc(1.6rem + 1vh);
   margin: 1.4rem 0;
 }
+.progress-bar {
+  width: 100%;
+}
 
 .congrats {
   font-size: 2rem;
@@ -125,13 +128,13 @@ h1 {
 }
 
 .country-name {
-  font-size: calc(1.8rem + 1vh);
+  font-size: calc(1.4rem + 1vh);
   font-weight: 300;
   margin-bottom: 1.6rem;
 }
 
 .flag-img {
-  height: calc(15rem + 1vh);
+  height: calc(13rem + 1vh);
   border-radius: 10px;
   box-shadow: 0 0 5px rgba(0, 0, 0, 0.076);
 }
@@ -144,7 +147,7 @@ h1 {
 }
 
 .input-capital {
-  font-size: 1.8rem;
+  font-size: 1.6rem;
   padding: 0.5em 0.8em;
   border-radius: 10px;
   border: solid rgba(0, 0, 0, 0.216) 1px;
@@ -161,7 +164,7 @@ h1 {
 }
 
 .button-ok {
-  font-size: 4.4rem;
+  font-size: 4rem;
   color: var(--green);
   cursor: pointer;
   transition: all 0.2s;
@@ -176,13 +179,13 @@ h1 {
   flex-direction: column;
   justify-content: center;
   align-items: center;
-  font-size: 2.2rem;
-  gap: 4.2rem;
+  font-size: 1.8rem;
+  gap: 2rem;
   margin-top: 2.6rem;
 }
 
 .hint-container {
-  font-size: 1.4rem;
+  font-size: 1.2rem;
   display: flex;
   align-items: center;
   gap: 1.6rem;

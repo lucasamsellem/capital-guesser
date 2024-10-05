@@ -225,8 +225,9 @@ toggleTimerBtn.addEventListener('click', toggleTimer);
 // Define difficulty mode
 modeBtns.forEach((btn) => {
   btn.addEventListener('click', () => {
+    console.log(btn);
     mode = btn.textContent.toLowerCase();
-    resetMode();
+    updateMode();
     progressBarValue = 0;
     updateProgressBarUI();
 
