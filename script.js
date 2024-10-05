@@ -40,11 +40,7 @@ const capitals = {
   },
 };
 
-// todo : bar progression en fonction du score
-// todo : trouver le + de capitales en l'espace de 30 secondes
-
-// ! VARIABLES
-
+// DOM Elements
 const countryName = document.querySelector('.country-name');
 const flag = document.querySelector('.flag-container');
 const resultText = document.querySelector('.result-text');
@@ -55,12 +51,18 @@ const hint = document.querySelector('.hint-container');
 const toggleTimerBtn = document.querySelector('.toggle-timer-btn');
 const timerText = document.querySelector('.timer');
 const scoreEl = document.querySelector('.score');
+
+// Variables
 const randomIndexHistory = new Set();
 const initialCountdownSeconds = 8;
 const hintText = ['La première lettre est', 'Les deux premières lettres sont'];
 const hintLettersLimit = 2;
 const modeBtns = document.querySelectorAll('.mode-btn');
+const progressBar = document.querySelector('.progress-bar');
+const congrats = document.querySelector('.congrats');
+const modeProgression = ['facile', 'moyen', 'difficile'];
 
+// States
 let mode = 'facile'; // Initial mode
 let countries = Object.keys(capitals[mode]);
 let uniqueIndex;
@@ -70,32 +72,20 @@ let seconds = initialCountdownSeconds;
 let countdown = false;
 let timerState = false;
 let score = 0;
-
-// Define difficulty mode
-modeBtns.forEach((btn) => {
-  btn.addEventListener('click', () => {
-    mode = btn.textContent.toLowerCase();
-    countries = Object.keys(capitals[mode]);
-
-    if (!btn.classList.contains('active')) {
-      randomIndexHistory.clear();
-      displayCountry();
-      updateUI();
-    }
-
-    const activeBtn = document.querySelector('.mode-btn.active');
-    if (activeBtn) activeBtn.classList.remove('active');
-    btn.classList.add('active');
-
-    return mode;
-  });
-});
+let progressBarValue = 0;
+let progressBarMaxValue = countries.length;
 
 // ! FUNCTIONS
 
 const generateUniqueIndex = () => {
-  // Reset history if all countries were guessed
-  if (randomIndexHistory.size >= countries.length) randomIndexHistory.clear();
+  if (randomIndexHistory.size >= countries.length) {
+    advanceMode();
+    updateMode();
+
+    modeBtns.forEach((btn) => {
+      btn.classList.toggle('active', btn.textContent.toLowerCase() === mode);
+    });
+  }
 
   // Generate new index if already stored in randomIndexHistory
   do {
@@ -105,18 +95,37 @@ const generateUniqueIndex = () => {
   return uniqueIndex;
 };
 
+const advanceMode = () => {
+  randomIndexHistory.clear();
+  progressBarValue = 0;
+  resetUI();
+  updateProgressBarUI();
+
+  let nextModeIndex = modeProgression.indexOf(mode) + 1;
+  mode = modeProgression[nextModeIndex % modeProgression.length];
+
+  if (nextModeIndex >= modeProgression.length) nextModeIndex = 0;
+};
+
+const updateActiveModeButton = (activeBtn) => {
+  const previousActive = document.querySelector('.mode-btn.active');
+  if (previousActive) previousActive.classList.remove('active');
+  activeBtn.classList.add('active');
+};
+
 const updateCountry = () => {
   uniqueIndex = generateUniqueIndex();
   randomIndexHistory.add(uniqueIndex);
   capital = capitals[mode][countries[uniqueIndex]];
 };
 
-const updateUI = () => {
+const resetUI = () => {
   inputCapital.value = '';
   inputCapital.classList.remove('correct');
   resultText.innerHTML = '';
   hint.textContent = '';
   fails = 0;
+  congrats.classList.add('opacity-zero');
 };
 
 const updateResultText = (text, clr) => {
@@ -127,6 +136,19 @@ const updateResultText = (text, clr) => {
 const updateScore = () => {
   score = Math.max(score, 0);
   scoreEl.textContent = score;
+};
+
+const updateProgressBarUI = () => {
+  progressBar.setAttribute('value', progressBarValue);
+  progressBar.setAttribute('max', progressBarMaxValue);
+
+  if (progressBarValue === progressBarMaxValue)
+    congrats.classList.remove('opacity-zero');
+};
+
+const updateMode = () => {
+  countries = Object.keys(capitals[mode]);
+  progressBarMaxValue = countries.length;
 };
 
 const generateHint = (failsCount, capitalFirstLetters) => {
@@ -163,7 +185,7 @@ const startTimer = () => {
   countdown = setInterval(() => {
     if (seconds === 0) {
       stopTimer();
-      updateUI();
+      resetUI();
       displayCountry();
       score--;
       updateScore();
@@ -200,6 +222,24 @@ const toggleTimer = () => {
 // ! DOM MANIPULATION
 toggleTimerBtn.addEventListener('click', toggleTimer);
 
+// Define difficulty mode
+modeBtns.forEach((btn) => {
+  btn.addEventListener('click', () => {
+    mode = btn.textContent.toLowerCase();
+    resetMode();
+    progressBarValue = 0;
+    updateProgressBarUI();
+
+    if (!btn.classList.contains('active')) {
+      randomIndexHistory.clear();
+      displayCountry();
+      resetUI();
+    }
+
+    updateActiveModeButton(btn);
+  });
+});
+
 btnOK.addEventListener('click', () => {
   const inputValue = inputCapital.value.toLowerCase().trim();
 
@@ -219,12 +259,13 @@ btnOK.addEventListener('click', () => {
     updateResultText('✅ Bien joué !', 'var(--green)');
     inputCapital.classList.add('correct');
     score++;
+    progressBarValue++;
     hint.textContent = '';
 
     setTimeout(() => {
       displayCountry();
-      updateUI();
-    }, 1000);
+      resetUI();
+    }, 500);
   } else {
     updateResultText("❌ Ce n'est pas la bonne capitale", 'red');
     fails++;
@@ -236,6 +277,7 @@ btnOK.addEventListener('click', () => {
     }
   }
   updateScore();
+  updateProgressBarUI();
 });
 
 // Press enter key on btnOk
