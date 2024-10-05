@@ -243,7 +243,9 @@ modeBtns.forEach((btn) => {
 
 btnOK.addEventListener('click', () => {
   const inputValue = inputCapital.value.toLowerCase().trim();
-
+  
+  if (!inputValue) return;
+  
   // Correct guess even without accents
   const correctGuess = capital.some(
     (guess) =>
